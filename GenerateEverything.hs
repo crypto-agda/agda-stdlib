@@ -58,6 +58,7 @@ extractHeader mod = fmap (extract . lines) $ readFileUTF8 mod
   where
   delimiter = all (== '-')
 
+  extract (('{':'-':'#':xs):xss) = extract xss
   extract (d1 : "-- The Agda standard library" : "--" : ss)
     | delimiter d1
     , (info, d2 : rest) <- span ("-- " `List.isPrefixOf`) ss
