@@ -1,3 +1,4 @@
+{-# OPTIONS --without-K #-}
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -39,9 +40,6 @@ cong-app refl x = refl
 cong₂ : ∀ {a b c} {A : Set a} {B : Set b} {C : Set c}
         (f : A → B → C) {x y u v} → x ≡ y → u ≡ v → f x u ≡ f y v
 cong₂ f refl refl = refl
-
-proof-irrelevance : ∀ {a} {A : Set a} {x y : A} (p q : x ≡ y) → p ≡ q
-proof-irrelevance refl refl = refl
 
 setoid : ∀ {a} → Set a → Setoid _ _
 setoid A = record

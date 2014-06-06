@@ -1,3 +1,4 @@
+{-# OPTIONS --without-K #-}
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -25,6 +26,7 @@ open import Relation.Nullary
 import Relation.Nullary.Decidable as Dec
 open import Relation.Unary as U using (Pred)
 
+{-
 infix 4 _∈?_
 
 _∈?_ : ∀ {n} x (p : Subset n) → Dec (x ∈ p)
@@ -165,3 +167,4 @@ p₁ ⊆? p₂ =
   Dec.map (Eq.sym NaturalPoset.orders-equivalent) $
   Dec.map′ PropVecEq.to-≡ PropVecEq.from-≡ $
   VecEq.DecidableEquality._≟_ Bool.decSetoid p₁ (p₁ ∩ p₂)
+-- -}

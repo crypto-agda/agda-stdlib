@@ -1,3 +1,4 @@
+{-# OPTIONS --without-K #-}
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -65,9 +66,11 @@ private
 -- When P is a decidable predicate over a finite set the following
 -- lemma can be proved.
 
+{-
 ¬∀⟶∃¬ : ∀ n {p} (P : Fin n → Set p) → Decidable P →
         ¬ (∀ i → P i) → ∃ λ i → ¬ P i
 ¬∀⟶∃¬ n P dec ¬P = Prod.map id proj₁ $ ¬∀⟶∃¬-smallest n P dec ¬P
+-}
 
 ------------------------------------------------------------------------
 -- Double-negation

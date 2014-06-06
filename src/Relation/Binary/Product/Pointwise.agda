@@ -1,3 +1,4 @@
+-- NOTE with-K
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -257,6 +258,7 @@ private
             (_≡_ ×-Rel _≡_) ⇒ _≡_ {A = A × B}
   to-cong {i = (x , y)} {j = (.x , .y)} (P.refl , P.refl) = P.refl
 
+  -- WITH-K
   from-cong : ∀ {a b} {A : Set a} {B : Set b} →
               _≡_ {A = A × B} ⇒ (_≡_ ×-Rel _≡_)
   from-cong P.refl = (P.refl , P.refl)

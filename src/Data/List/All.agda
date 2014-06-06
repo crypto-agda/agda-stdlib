@@ -1,3 +1,4 @@
+-- NOTE with-K
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -25,6 +26,7 @@ data All {a p} {A : Set a}
   []  : All P []
   _∷_ : ∀ {x xs} (px : P x) (pxs : All P xs) → All P (x ∷ xs)
 
+-- WITH-K
 head : ∀ {a p} {A : Set a} {P : A → Set p} {x xs} →
        All P (x ∷ xs) → P x
 head (px ∷ pxs) = px
