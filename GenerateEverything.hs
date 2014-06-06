@@ -54,11 +54,17 @@ isLibraryModule f =
 -- | Reads a module and extracts the header.
 
 extractHeader :: FilePath -> IO [String]
-extractHeader mod = fmap (extract . lines) $ readFileUTF8 mod
+extractHeader mod = fmap (extract0 . lines) $ readFileUTF8 mod
   where
   delimiter = all (== '-')
 
-  extract (('{':'-':'#':xs):xss) = extract xss
+  -- extract0 (('{':'-':'#':xs):xss) = extract xss
+  extract0 ("{-# OPTIONS --without-K #-}":xss) = extract xss
+  extract0 ("-- with-K":xss) = extract xss
+  extract0 ("-- NOTE with-K":xss) = extract xss
+  -- extract0 xss = extract xss
+  extract0 _ = error $ mod ++ " is malformed (first line)."
+
   extract (d1 : "-- The Agda standard library" : "--" : ss)
     | delimiter d1
     , (info, d2 : rest) <- span ("-- " `List.isPrefixOf`) ss
