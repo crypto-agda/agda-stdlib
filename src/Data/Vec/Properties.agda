@@ -1,3 +1,4 @@
+-- NOTE with-K
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
@@ -307,6 +308,7 @@ proof-irrelevance-[]= (there xs[i]=x) (there xs[i]=x') =
 
 -- _[_]=_ can be expressed using lookup and _≡_.
 
+{-
 []=↔lookup : ∀ {a n i} {A : Set a} {x} {xs : Vec A n} →
              xs [ i ]= x ↔ lookup i xs ≡ x
 []=↔lookup {i = i} {x = x} {xs} = record
@@ -325,7 +327,7 @@ proof-irrelevance-[]= (there xs[i]=x) (there xs[i]=x') =
   from : ∀ {n} (i : Fin n) xs → lookup i xs ≡ x → xs [ i ]= x
   from zero    (.x ∷ _)  refl = here
   from (suc i) (_  ∷ xs) p    = there (from i xs p)
-
+-}
 ------------------------------------------------------------------------
 -- Some properties related to _[_]≔_
 
