@@ -1,4 +1,4 @@
-{-# OPTIONS --without-K #-}
+-- NOTE with-K
 ------------------------------------------------------------------------
 -- The Agda standard library
 --
