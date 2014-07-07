@@ -65,6 +65,7 @@ mutual
   -- inferred from a value of type Record Sig.
 
   record Record {s} (Sig : Signature s) : Set s where
+    inductive
     constructor rec
     field fun : Record-fun Sig
 
