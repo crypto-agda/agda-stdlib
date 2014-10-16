@@ -19,9 +19,6 @@ open import Relation.Binary
 open import Relation.Binary.PropositionalEquality as PropEq
   using (_≡_; refl)
 
-infixl 7 _*_ _⊓_
-infixl 6 _∸_ _⊔_
-
 ------------------------------------------------------------------------
 -- The types
 
@@ -98,7 +95,8 @@ pred : ℕ → ℕ
 pred zero    = zero
 pred (suc n) = n
 
-infixl 6 _+_ _+⋎_
+infixl 7 _*_ _⊓_
+infixl 6 _+_ _+⋎_ _∸_ _⊔_
 
 _+_ : ℕ → ℕ → ℕ
 zero  + n = n

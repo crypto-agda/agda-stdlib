@@ -56,6 +56,15 @@ s₁ ≟-Name s₂ with s₁ == s₂
 ... | false = no whatever
   where postulate whatever : _
 
+-- Names can be shown.
+
+private
+  primitive
+    primShowQName : Name → String
+
+showName : Name → String
+showName = primShowQName
+
 ------------------------------------------------------------------------
 -- Terms
 
@@ -63,12 +72,12 @@ s₁ ≟-Name s₂ with s₁ == s₂
 -- instance argument?
 
 data Visibility : Set where
-  visible hidden instance : Visibility
+  visible hidden instance′ : Visibility
 
 {-# BUILTIN HIDING   Visibility #-}
 {-# BUILTIN VISIBLE  visible    #-}
 {-# BUILTIN HIDDEN   hidden     #-}
-{-# BUILTIN INSTANCE instance   #-}
+{-# BUILTIN INSTANCE instance′  #-}
 
 -- Arguments can be relevant or irrelevant.
 
@@ -108,11 +117,11 @@ data Literal : Set where
   name   : Name → Literal
 
 {-# BUILTIN AGDALITERAL   Literal #-}
-{-# BUILTIN AGDALITNAT    nat #-}
-{-# BUILTIN AGDALITFLOAT  float #-}
-{-# BUILTIN AGDALITCHAR   char #-}
-{-# BUILTIN AGDALITSTRING string #-}
-{-# BUILTIN AGDALITQNAME  name #-}
+{-# BUILTIN AGDALITNAT    nat     #-}
+{-# BUILTIN AGDALITFLOAT  float   #-}
+{-# BUILTIN AGDALITCHAR   char    #-}
+{-# BUILTIN AGDALITSTRING string  #-}
+{-# BUILTIN AGDALITQNAME  name    #-}
 
 -- Terms.
 
@@ -126,7 +135,7 @@ mutual
     def     : (f : Name) (args : List (Arg Term)) → Term
     -- Different kinds of λ-abstraction.
     lam     : (v : Visibility) (t : Term) → Term
-    -- Pattern matching λ-abstraction
+    -- Pattern matching λ-abstraction.
     pat-lam : (cs : List Clause) (args : List (Arg Term)) → Term
     -- Pi-type.
     pi      : (t₁ : Arg Type) (t₂ : Type) → Term
@@ -149,15 +158,15 @@ mutual
     unknown : Sort
 
   data Pattern : Set where
-    con  : Name → List (Arg Pattern) → Pattern
-    dot  : Pattern
-    var  : Pattern
-    lit  : Literal → Pattern
-    proj : Name → Pattern
+    con    : Name → List (Arg Pattern) → Pattern
+    dot    : Pattern
+    var    : Pattern
+    lit    : Literal → Pattern
+    proj   : Name → Pattern
     absurd : Pattern
 
   data Clause : Set where
-    clause : List (Arg Pattern) → Term → Clause
+    clause        : List (Arg Pattern) → Term → Clause
     absurd-clause : List (Arg Pattern) → Clause
 
 {-# BUILTIN AGDASORT    Sort    #-}
@@ -180,16 +189,15 @@ mutual
 {-# BUILTIN AGDASORTLIT         lit     #-}
 {-# BUILTIN AGDASORTUNSUPPORTED unknown #-}
 
-{-# BUILTIN AGDAPATCON con #-}
-{-# BUILTIN AGDAPATDOT dot #-}
-{-# BUILTIN AGDAPATVAR var #-}
-{-# BUILTIN AGDAPATLIT lit #-}
-{-# BUILTIN AGDAPATPROJ proj #-}
+{-# BUILTIN AGDAPATCON    con    #-}
+{-# BUILTIN AGDAPATDOT    dot    #-}
+{-# BUILTIN AGDAPATVAR    var    #-}
+{-# BUILTIN AGDAPATLIT    lit    #-}
+{-# BUILTIN AGDAPATPROJ   proj   #-}
 {-# BUILTIN AGDAPATABSURD absurd #-}
 
 {-# BUILTIN AGDACLAUSECLAUSE clause        #-}
 {-# BUILTIN AGDACLAUSEABSURD absurd-clause #-}
-
 
 ------------------------------------------------------------------------
 -- Definitions
@@ -380,15 +388,15 @@ private
   absurd-clause₁ refl = refl
 
 _≟-Visibility_ : Decidable (_≡_ {A = Visibility})
-visible  ≟-Visibility visible  = yes refl
-hidden   ≟-Visibility hidden   = yes refl
-instance ≟-Visibility instance = yes refl
-visible  ≟-Visibility hidden   = no λ()
-visible  ≟-Visibility instance = no λ()
-hidden   ≟-Visibility visible  = no λ()
-hidden   ≟-Visibility instance = no λ()
-instance ≟-Visibility visible  = no λ()
-instance ≟-Visibility hidden   = no λ()
+visible   ≟-Visibility visible   = yes refl
+hidden    ≟-Visibility hidden    = yes refl
+instance′ ≟-Visibility instance′ = yes refl
+visible   ≟-Visibility hidden    = no λ()
+visible   ≟-Visibility instance′ = no λ()
+hidden    ≟-Visibility visible   = no λ()
+hidden    ≟-Visibility instance′ = no λ()
+instance′ ≟-Visibility visible   = no λ()
+instance′ ≟-Visibility hidden    = no λ()
 
 _≟-Relevance_ : Decidable (_≡_ {A = Relevance})
 relevant   ≟-Relevance relevant   = yes refl
