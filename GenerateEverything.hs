@@ -7,6 +7,7 @@ import System.IO
 import System.Exit
 import System.FilePath
 import System.FilePath.Find
+import Debug.Trace
 
 headerFile = "Header"
 outputFile = "Everything.agda"
@@ -59,6 +60,8 @@ extractHeader mod = fmap (extract0 . lines) $ readFileUTF8 mod
   delimiter = all (== '-')
 
   -- extract0 (('{':'-':'#':xs):xss) = extract xss
+  extract0 ("-- {-# OPTIONS --without-K #-}":xss) =
+    trace ("WARNING: " ++ mod ++ "is with K") $ extract xss
   extract0 ("{-# OPTIONS --without-K #-}":xss) = extract xss
   extract0 ("-- with-K":xss) = extract xss
   extract0 ("-- NOTE with-K":xss) = extract xss
